@@ -1,11 +1,5 @@
 {
     "version": 2,
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/api"
-        }
-    ],
     "builds": [
         {
             "src": "backend/server.js",
@@ -22,11 +16,11 @@
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "backend/server.js"
+            "dest": "/backend/server.js"
         },
         {
             "src": "/(.*)",
-            "dest": "frontend/$1"
+            "dest": "/frontend/$1"
         }
     ]
 }
