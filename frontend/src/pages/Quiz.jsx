@@ -4,7 +4,10 @@ import AuthContext from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import API_URL from '../config';
 
-const socket = io(API_URL);
+const socket = io(API_URL, {
+    transports: ['polling'],
+    withCredentials: true
+});
 
 const Quiz = () => {
     const { user } = useContext(AuthContext);
