@@ -19,8 +19,7 @@
             "dest": "/backend/server.js"
         },
         {
-            "src": "/assets/(.*)",
-            "dest": "/frontend/assets/$1"
+            "handle": "filesystem"
         },
         {
             "src": "/(.*)",
