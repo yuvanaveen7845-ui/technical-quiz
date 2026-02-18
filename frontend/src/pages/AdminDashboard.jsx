@@ -6,8 +6,9 @@ import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import API_URL from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(API_URL);
 
 const AdminDashboard = () => {
     const { user } = useContext(AuthContext);
@@ -63,7 +64,7 @@ const AdminDashboard = () => {
 
     const fetchStudents = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/users');
+            const res = await axios.get(`${API_URL}/api/admin/users`);
             setStudents(res.data);
         } catch (err) {
             console.error(err);

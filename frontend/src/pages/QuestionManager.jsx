@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
+import API_URL from '../config';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const socket = io('http://localhost:5000');
+const socket = io(API_URL);
 
 const QuestionManager = () => {
     const { user } = useContext(AuthContext);
@@ -55,7 +56,7 @@ const QuestionManager = () => {
 
     const fetchQuestions = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/questions', {
+            const res = await axios.get(`${API_URL}/api/admin/questions`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setQuestions(res.data);
@@ -67,7 +68,7 @@ const QuestionManager = () => {
 
     const fetchStudentCount = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/users', {
+            const res = await axios.get(`${API_URL}/api/admin/users`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             // Approximate count for now, logic can be improved
@@ -81,7 +82,7 @@ const QuestionManager = () => {
         const formData = new FormData();
         formData.append('image', file);
         try {
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post(`${API_URL}/api/upload`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setQuestionData({ ...questionData, image: res.data.url });
@@ -112,10 +113,10 @@ const QuestionManager = () => {
             const config = { headers: { Authorization: `Bearer ${token}` } };
 
             if (editingId) {
-                await axios.put(`http://localhost:5000/api/admin/questions/${editingId}`, payload, config);
+                await axios.put(`${API_URL}/api/admin/questions/${editingId}`, payload, config);
                 toast.success("Question Updated");
             } else {
-                await axios.post('http://localhost:5000/api/admin/questions', payload, config);
+                await axios.post(`${API_URL}/api/admin/questions`, payload, config);
                 toast.success("Question Added");
             }
             fetchQuestions();
@@ -143,7 +144,7 @@ const QuestionManager = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this question?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/admin/questions/${id}`, {
+            await axios.delete(`${API_URL}/api/admin/questions/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             toast.success("Deleted");

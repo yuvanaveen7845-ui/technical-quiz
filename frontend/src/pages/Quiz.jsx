@@ -2,8 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import io from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
 import { toast } from 'react-toastify';
+import API_URL from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(API_URL);
 
 const Quiz = () => {
     const { user } = useContext(AuthContext);

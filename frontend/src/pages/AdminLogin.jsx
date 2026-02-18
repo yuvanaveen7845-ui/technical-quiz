@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import API_URL from '../config';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
             if (res.data.user.role !== 'admin') {
                 setError('Access Denied: Not an Admin');
                 return;
